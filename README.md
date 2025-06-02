@@ -1,6 +1,4 @@
-# RovHer
-## A heritability-optimized method for functional prioritization of rare coding variants in complex traits
-
+# RovHer: heritability-optimized scores for the functional prioritization of rare missense variants
 
 <!-- PROJECT SHIELDS -->
 <!--
@@ -24,7 +22,7 @@
   <p align="center">
     An awesome README template to jumpstart your projects!
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/othneildrew/Best-README-Template"><strong>See training data »</strong></a>
     <br />
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template">View paper</a>
@@ -66,33 +64,21 @@
 <!-- ABOUT -->
 ## About
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+Predicting rare variants (RVs; MAF < 1%) that influence complex disease risk is a significant challenge. Missense RVs exhibit a wide range of effects on traits, largely by acting in a polygenic manner, thus the need for tools to better interpret their impact. We introduce RovHer (RV heritability-optimized scores), an unbiased, scalable method that scores missense RVs based on their probability of functional effect.
+The RovHer method employs the multivariate adaptive regression splines (MARS) model to integrate feature annotations with exome-wide association study (ExWAS) summary statistics of height. Specifically, it is trained on the RV association false discovery rate retrieved from [Genebass](https://app.genebass.org/), a surrogate measure for the likelihood of variant functionality.
 
-The RovHer model was trained using the multivariate adaptive regression splines algorithm implemented in the 'earth' R package (5.3.4). 
+This approach was chosen to directly assess how well each model maximizes the genome-wide phenotypic variance that can be explained by a set of prioritized RVs, which are more likely to be functional and disease-relevant. RovHer scores are trait-agnostic, and the model does not rely on assumptions about genetic architecture or effect size.
 
-Here's why:
-* You should implement DRY principles to the rest of your life :smile:
-
-Use the `BLANK_README.md` to get started.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-An overview of the development and application of the RovHer algorithm.
-
-
+![Workflow Overview](RovHer%20workflow.png)
+*An overview of the development and application of the RovHer algorithm.*
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+This section should list any major frameworks/libraries used to bootstrap your project. Here are a few examples.
 
 * [![Next][Next.js]][Next-url]
 * [![React][React.js]][React-url]
 * [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -118,7 +104,7 @@ Install the latest version of this package by entering the following in R:
 ## RovHer predictors
 
 12 significant variant and gene-level predictors selected by the RovHer model
-| Rank | Predictor |
+| Importance Ranking | Predictor |
 |-----:|-----------|
 |     1| Minor allele frequency|
 |     2| H3K9ac signals    |
@@ -146,17 +132,15 @@ _Below is an example of how you can instruct your audience on installing and set
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Resources
+
+Use the `README.md` to get started.
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Resources
 
 RovHer scores for all UK Biobank 4,927,152 rare variants used in this manuscript, along with pre-computed scores for all possible rare variants in the human exome, will be made available upon publication and can be downloaded from Zenodo. Additionally, pre-trained RovHer models are also available on Zenodo to allow replication and application to other datasets.
 
@@ -172,34 +156,13 @@ _Please refer to the [Documentation](https://example.com)_
 
 - [x] Add Changelog
 - [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
 - [ ] Add "components" document to easily copy & paste sections of the readme
 - [ ] Multi-language Support
     - [ ] Chinese
     - [ ] Spanish
 
 See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- LICENSE -->
@@ -208,15 +171,6 @@ Don't forget to give the project a star! Thanks again!
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
