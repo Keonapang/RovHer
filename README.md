@@ -39,7 +39,7 @@
 
 Predicting rare variants (RVs; MAF < 1%) that influence complex disease risk is a significant challenge. We introduce RovHer (RV heritability-optimized scores), an unbiased, scalable method that scores missense RVs based on their probability of functional effect. The RovHer method employs the [Multivariate Adaptive Regression Splines](https://CRAN.R-project.org/package=earth) model to integrate feature annotations with [Genebass](https://app.genebass.org/) exome-wide association study (ExWAS) summary statistics of height. Specifically, it is trained on the RV association false discovery rate, a surrogate measure for the likelihood of variant functionality.
 
-We used a heritability-based benchmark approach to directly assess how well the model maximizes genome-wide phenotypic variance that can be explained by a set of prioritized RVs, which are more likely to be functional and disease-relevant. RovHer scores are trait-agnostic, and the model does not rely on assumptions about genetic architecture or effect size.
+The model prioritizes RVs based on maximizing the proportion genome-wide phenotypic variance explained, which are more likely functional and disease-relevant. RovHer scores are trait-agnostic, and the model does not rely on assumptions about genetic architecture or effect size.
 
 ![Workflow Overview](RovHer%20workflow.png)
 *An overview of the development and application of the RovHer algorithm.*
