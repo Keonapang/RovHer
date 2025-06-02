@@ -37,8 +37,7 @@
 <!-- ABOUT -->
 ## About
 
-Predicting rare variants (RVs; MAF < 1%) that influence complex disease risk is a significant challenge. Missense RVs exhibit a wide range of effects on traits, largely by acting in a polygenic manner, thus the need for tools to better interpret their impact. We introduce RovHer (RV heritability-optimized scores), an unbiased, scalable method that scores missense RVs based on their probability of functional effect.
-The RovHer method employs the multivariate adaptive regression splines (MARS) model to integrate feature annotations with [Genebass](https://app.genebass.org/)exome-wide association study (ExWAS) summary statistics of height. Specifically, it is trained on the RV association false discovery rate, a surrogate measure for the likelihood of variant functionality.
+Predicting rare variants (RVs; MAF < 1%) that influence complex disease risk is a significant challenge. We introduce RovHer (RV heritability-optimized scores), an unbiased, scalable method that scores missense RVs based on their probability of functional effect. The RovHer method employs the multivariate adaptive regression splines (MARS) model to integrate feature annotations with [Genebass](https://app.genebass.org/)exome-wide association study (ExWAS) summary statistics of height. Specifically, it is trained on the RV association false discovery rate, a surrogate measure for the likelihood of variant functionality.
 
 This approach was chosen to directly assess how well each model maximizes the genome-wide phenotypic variance that can be explained by a set of prioritized RVs, which are more likely to be functional and disease-relevant. RovHer scores are trait-agnostic, and the model does not rely on assumptions about genetic architecture or effect size.
 
