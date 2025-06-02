@@ -1,5 +1,5 @@
 # RovHer
-## A heritability-optimized method for functional prioritization of rare coding variants in complex traits![image](https://github.com/user-attachments/assets/aaa66dab-907a-4c98-8148-41b6bf1b16aa)
+## A heritability-optimized method for functional prioritization of rare coding variants in complex traits
 
 
 <!-- PROJECT SHIELDS -->
