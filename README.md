@@ -113,7 +113,6 @@ Pre-trained RovHer models:
 We gratefully acknowledge and thank the authors of the various in silico tools that we utilized in our study for making their pre-computed scores and training data readily available.
 * [![Next][Next.js]][Next-url]
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## References
 
@@ -127,8 +126,6 @@ Karczewski, K. J., Solomonson, M., Chao, K. R., Goodrich, J. K., Tiao, G., Lu, W
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
