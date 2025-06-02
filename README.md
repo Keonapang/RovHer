@@ -115,7 +115,13 @@ We gratefully acknowledge and thank the authors of the various in silico tools t
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## References
 
+RARity paper
+
+Milborrow, S. (2023, January 26). earth: Multivariate Adaptive Regression Splines
+
+Karczewski, K. J., Solomonson, M., Chao, K. R., Goodrich, J. K., Tiao, G., Lu, W., Riley-Gillis, B. M., Tsai, E. A., Kim, H. I., Zheng, X., Rahimov, F., Esmaeeli, S., Grundstad, A. J., Reppell, M., Waring, J., Jacob, H., Sexton, D., Bronson, P. G., Chen, X., … Neale, B. M. (2022). Systematic single-variant and gene-based association testing of thousands of phenotypes in 394,841 UK Biobank exomes. Cell Genomics, 2(9), 100168. https://doi.org/10.1016/j.xgen.2022.100168
 
 <!-- LICENSE -->
 ## License
