@@ -10,13 +10,6 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 
 
 <!-- PROJECT LOGO -->
@@ -34,9 +27,7 @@
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/othneildrew/Best-README-Template">View paper</a>
     ·
     <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
   </p>
@@ -72,23 +63,21 @@
 
 
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+<!-- ABOUT -->
+## About
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+The RovHer model was trained using the multivariate adaptive regression splines algorithm implemented in the 'earth' R package (5.3.4). 
 
 Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
 * You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
 
 Use the `BLANK_README.md` to get started.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+An overview of the development and application of the RovHer algorithm.
 
 
 
@@ -108,26 +97,47 @@ This section should list any major frameworks/libraries used to bootstrap your p
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+This repo allows users to either obtain pre-computed RovHer scores for UK Biobank rare variants. 
+Or download a local copy up of the pre-trained RovHer model and generate RovHer scores for a list of RVs following these simple steps.
+
+## System requirements
+RovHer can generate variant-level predictions on major operating systems, including GNU/Linux, macOS, and Windows. For biobank-scale analyses, we recommend Unix-based hardware with a minimum of 100GB RAM. 
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
+Other required software dependencies for RovHer include the R packages data.table, tidyverse, and dplyr. 
+Install the latest version of this package by entering the following in R:
+* earth: Multivariate Adaptive Regression Splines. See ([CRAN](https://CRAN.R-project.org/package=earth)).
   ```sh
-  npm install npm@latest -g
+  install.packages("earth")
   ```
+
+## RovHer predictors
+
+12 significant variant and gene-level predictors selected by the RovHer model
+| Rank | Predictor |
+|-----:|-----------|
+|     1| Minor allele frequency|
+|     2| H3K9ac signals    |
+|     3| AlphaMissense       |
+|     4| Promoter CpG density    |
+|     5| HIPred       |
+|     6| Gene expression level    |
+|     7| DANN       |
+|     8| Promoter phastcons    |
+|     9| UNEECON-G       |
+|     10| Fathmm-XF      |
+|     11| Exonic phastcons      |
+|     12| BayesDel-addAF  |
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+_Below is an example of how you can instruct your audience on installing and setting up your app._
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. Get pre-trained model at [https://example.com](https://example.com)
 2. Clone the repo
    ```sh
    git clone https://github.com/your_username_/Project-Name.git
@@ -148,9 +158,10 @@ _Below is an example of how you can instruct your audience on installing and set
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+RovHer scores for all UK Biobank 4,927,152 rare variants used in this manuscript, along with pre-computed scores for all possible rare variants in the human exome, will be made available upon publication and can be downloaded from Zenodo. Additionally, pre-trained RovHer models are also available on Zenodo to allow replication and application to other datasets.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+Additional screenshots, code examples and demos work well in this space. 
+_Please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
