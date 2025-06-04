@@ -91,11 +91,16 @@ Change directories `cd /RovHer`
 Access sample training dataset `./input/annotation_matrix.txt` 
 Preview sample output file `./output/RovHer_scores.txt`
 
+Doesnt matter what order - variants do not have to be sorted in any particular order.
+
+Input file requires no header.
+
+
 <!-- Resources -->
 
 ## Resources
 
-RovHer scores for all UK Biobank 4,927,152 rare variants used in this manuscript, along with pre-computed scores for all possible rare variants in the human exome, will be made available upon publication and can be downloaded from Zenodo. Additionally, pre-trained RovHer models are also available on Zenodo to allow replication and application to other datasets.
+RovHer scores for all UK Biobank 4,927,152 rare variants used in this manuscript, along with pre-computed scores for all 79,971,228 possible autosomal rare variants in the human exome, will be made available upon publication and can be downloaded from Zenodo. Additionally, pre-trained RovHer models are also available on Zenodo to allow replication and application to other datasets.
 
 Additional screenshots, code examples and demos work well in this space. 
 _Please refer to the [Documentation](https://example.com)_
@@ -116,7 +121,7 @@ We gratefully acknowledge and thank the authors of the various in silico tools t
 
 ## References
 
-RARity paper
+Pathan, N., Deng, W. Q., Khan, M., Scipio, M. D., Mao, S., Morton, R. W., Lali, R., Pigeyre, M., Chong, M. R., & Paré, G. (2022). A method to estimate the contribution of rare coding variants to complex trait heritability. Nature Communications, 15(1), 1245. https://doi.org/10.1038/s41467-024-45407-8
 
 Milborrow, S. (2023, January 26). earth: Multivariate Adaptive Regression Splines
 
