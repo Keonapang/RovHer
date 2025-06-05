@@ -37,77 +37,77 @@
 <!-- ABOUT -->
 ## About
 
-Predicting rare variants (RVs; MAF < 1%) that influence complex disease risk is a significant challenge. We introduce RovHer (RV heritability-optimized scores), an unbiased, scalable method that scores missense RVs based on their probability of functional effect. The RovHer method employs the [Multivariate Adaptive Regression Splines](https://CRAN.R-project.org/package=earth) model to integrate feature annotations with [Genebass](https://app.genebass.org/) exome-wide association study (ExWAS) summary statistics of height. Specifically, it is trained on the RV association false discovery rate, a surrogate measure for the likelihood of variant functionality.
+Predicting rare variants (RVs; MAF < 1%) that influence complex disease risk is a significant challenge. We introduce RovHer (RV heritability-optimized scores), an unbiased, scalable method that scores missense RVs based on their probability of functional effect. The RovHer method employs the [Multivariate Adaptive Regression Splines](https://CRAN.R-project.org/package=earth) [1] model to integrate feature annotations with [Genebass](https://app.genebass.org/) [2] exome-wide association study (ExWAS) summary statistics of height. Specifically, it is trained on the per-variant false discovery rate, a surrogate measure for the likelihood of variant functionality.
 
-The model prioritizes RVs based on maximizing the proportion genome-wide phenotypic variance explained, which are more likely functional and disease-relevant. RovHer scores are trait-agnostic, and the model does not rely on assumptions about genetic architecture or effect size.
+*Performance*:
+The model prioritizes RVs based on maximizing the proportion genome-wide phenotypic variance explained, which are variants that more likely functional and disease-relevant [3]. RovHer scores are trait-agnostic, and the model does not rely on assumptions about genetic architecture or effect size. 
+
+*Note on usage*:
+RovHer scores were generated on all 79,971,228 possible autosomal rare variants in humans. In our study, the scores were optimized for rare missense variants. LoF variants do not contribute a large proportion of total rare variant heritability of a given trait. 
 
 ![Workflow Overview](RovHer%20workflow.png)
 *An overview of the development and application of the RovHer algorithm.*
 
-## Hardware requirements
-RovHer can generate variant-level predictions on major operating systems, including GNU/Linux, macOS, and Windows. For biobank-scale analyses, we recommend Unix-based hardware with a minimum of 100GB RAM. 
+## Requirements
+# Hardware
+RovHer can generate variant-level predictions on major operating systems, including GNU/Linux, macOS, and Windows. For biobank-scale analyses, we recommend Unix-based hardware with a minimum of 200GB RAM. 
+
+# Software dependencies
+R packages data.table, tidyverse, and dplyr
 
 <!-- GETTING STARTED -->
-## Getting Started
+## Getting started: Retrieve pre-computed scores 
 
-This repo allows users to obtain RovHer scores. There are two options:
+This repo allows users to obtain RovHer scores under two options:
 
-| Option | Description | Software requirements |
+| Option | Description | Script name |
 |-----:|-----------|-----------|
-|     1| Retrieve pre-computed scores generated on UK Biobank WES data | R (3.6>) |
-|     2| Generate scores for any given list of rare variants using pre-trained RovHer model | R (3.6>); 'earth' R package (5.3.4) |
+|     1| Retrieve scores for a given list of rare variants | get_scores.r |
+|     2| Retrieve scores for all rare variants in a given gene | get_scores_per_gene.r |
 
-Other required software dependencies for RovHer include the R packages data.table, tidyverse, and dplyr. 
-
-# Option 1: Retrieve pre-computed scores 
-
-A text file consisting of a column of PLINK IDs is required for input. 
+Variant order in `input_variants.txt` does not matter. A text file consisting of a column of PLINK IDs is required for input. No header needed.
 | Variants |
 |-----:|
 |  1:10030:A:T| 
-|  1:103040:C:G| 
 |  8:203440:G:C| 
 |  ....| 
 
-
-# Option 2: Generate scores using pre-trained model
-
-### Installation
-
-1. Download pre-trained model at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/Keonapang/RovHer.git
+   cd ./RovHer
    ```
-3. Install the latest version of [earth: Multivariate Adaptive Regression Splines](https://CRAN.R-project.org/package=earth))
-  ```sh
-  install.packages("earth")
-  ```
+2. Download `All_RovHer_Scores.txt.gz` from Zenodo and place it in the same directory as this script. 
+
+3. Run script. 
+   ```sh
+    INFILE="./RovHer/Demo/input_variants.txt"
+    DIR_OUT="./RovHer/Demo"
+
+    cd ./RovHer
+    Rscript ./scripts/get_RovHer_scores.r $INFILE $DIR_OUT
+    ``` 
+
+4. Retrieve all RovHer scores for a given gene. Navigate to script directory.
+   ```sh
+    gene="LDLR"
+    DIR_OUT="./RovHer/Demo"
+
+    cd ./RovHer
+    Rscript ./scripts/get_RovHer_scores.r $gene $DIR_OUT
+    ``` 
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Example workflow
-
-Change directories `cd /RovHer`
-Access sample training dataset `./input/annotation_matrix.txt` 
-Preview sample output file `./output/RovHer_scores.txt`
-
-Doesnt matter what order - variants do not have to be sorted in any particular order.
-
-Input file requires no header.
-
 
 <!-- Resources -->
 
 ## Resources
 
-RovHer scores for all UK Biobank 4,927,152 rare variants used in this manuscript, along with pre-computed scores for all 79,971,228 possible autosomal rare variants in the human exome, will be made available upon publication and can be downloaded from Zenodo. Additionally, pre-trained RovHer models are also available on Zenodo to allow replication and application to other datasets.
+RovHer scores for all UK Biobank 4,927,152 rare variants used in this manuscript, along with pre-computed scores for all 79,971,228 possible autosomal rare variants in the human exome, will be made available upon publication and can be downloaded from Zenodo. 
 
-Additional screenshots, code examples and demos work well in this space. 
-_Please refer to the [Documentation](https://example.com)_
-
-Pre-trained RovHer models:
-* Full model (trained on the FDR of height)
-* Model excluding prediction methods with commercial licensing requirements
+RovHer scores:
+* Score file generated using a MARS model
+* Score file generated using a MARS model trained on prediction features that do not have commercial licensing requirements
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -121,11 +121,11 @@ We gratefully acknowledge and thank the authors of the various in silico tools t
 
 ## References
 
-Pathan, N., Deng, W. Q., Khan, M., Scipio, M. D., Mao, S., Morton, R. W., Lali, R., Pigeyre, M., Chong, M. R., & Paré, G. (2022). A method to estimate the contribution of rare coding variants to complex trait heritability. Nature Communications, 15(1), 1245. https://doi.org/10.1038/s41467-024-45407-8
+[1] Milborrow, S. (2023, January 26). earth: Multivariate Adaptive Regression Splines
 
-Milborrow, S. (2023, January 26). earth: Multivariate Adaptive Regression Splines
+[2] Karczewski, K. J., Solomonson, M., Chao, K. R., Goodrich, J. K., Tiao, G., Lu, W., Riley-Gillis, B. M., Tsai, E. A., Kim, H. I., Zheng, X., Rahimov, F., Esmaeeli, S., Grundstad, A. J., Reppell, M., Waring, J., Jacob, H., Sexton, D., Bronson, P. G., Chen, X., … Neale, B. M. (2022). Systematic single-variant and gene-based association testing of thousands of phenotypes in 394,841 UK Biobank exomes. Cell Genomics, 2(9), 100168. https://doi.org/10.1016/j.xgen.2022.100168
 
-Karczewski, K. J., Solomonson, M., Chao, K. R., Goodrich, J. K., Tiao, G., Lu, W., Riley-Gillis, B. M., Tsai, E. A., Kim, H. I., Zheng, X., Rahimov, F., Esmaeeli, S., Grundstad, A. J., Reppell, M., Waring, J., Jacob, H., Sexton, D., Bronson, P. G., Chen, X., … Neale, B. M. (2022). Systematic single-variant and gene-based association testing of thousands of phenotypes in 394,841 UK Biobank exomes. Cell Genomics, 2(9), 100168. https://doi.org/10.1016/j.xgen.2022.100168
+[3] Pathan, N., Deng, W. Q., Khan, M., Scipio, M. D., Mao, S., Morton, R. W., Lali, R., Pigeyre, M., Chong, M. R., & Paré, G. (2022). A method to estimate the contribution of rare coding variants to complex trait heritability. Nature Communications, 15(1), 1245. https://doi.org/10.1038/s41467-024-45407-8
 
 <!-- LICENSE -->
 ## License
