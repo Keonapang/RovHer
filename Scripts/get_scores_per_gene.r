@@ -11,44 +11,70 @@ if (!requireNamespace("data.table", quietly = TRUE)) {
 if (!requireNamespace("tidyverse", quietly = TRUE)) {
   install.packages("tidyverse")
 }
+cat("\n")
 
 suppressMessages(library(data.table))
 suppressMessages(library(tidyverse))
+setDTthreads(threads = 15)
 
 args <- commandArgs(trailingOnly = TRUE)
-GENE <- args[1]
-DIR_OUT <- args[2]
+DIR_OUT <- args[1] # DIR="/mnt/nfs/rigenenfs/shared_resources/biobanks/UKBIOBANK/pangk/RovHer/Demo"
+GENE <- args[2] # GENE="LDLR APOB BRCA1"
 
 if (length(args) < 2) {
   stop("Usage: Rscript ./Scripts/get_scores_per_gene.r <GENE> <DIR_OUT>")
 }
 
 if (!dir.exists(DIR_OUT)) {
-  stop(paste("Directory does not exist:", DIR_OUT))
+  dir.create(DIR_OUT, recursive = TRUE)
+  cat(paste("Directory created:", DIR_OUT, "\n"))
 }
 
-cat("Selected gene:", GENE, "\n")
+# Parse single or multiple genes
+gene_list <- unlist(strsplit(GENE, " "))  
+
+cat("Selected gene(s):", paste(gene_list, collapse = ", "), "\n")
 cat("Output directory:", DIR_OUT, "\n\n")
 
-# Load
+# Load master score file
 cat("Loading master score file...\n")
 score_file <- fread("All_RovHer_Scores.txt.gz")
 
-# Ensure that the input GENE is valid
-if (!gene %in% unique(score_file$Gene)) {
-  stop(paste(gene, "not found in the score file."))
+# Iterate over each gene
+combined_gene_rows <- data.table()
+skipped_genes <- c()
+for (gene in gene_list) {
+  cat("Processing gene:", gene, "...\n")
+  
+  # Check if the gene is valid
+  if (!gene %in% unique(score_file$Gene)) {
+    cat(paste("Warning:", gene, "not found in the score file. Skipping...\n"))
+    skipped_genes <- c(skipped_genes, gene)  # Add to skipped genes list
+    next
+  }
+
+  gene_rows <- score_file[Gene == gene]
+  combined_gene_rows <- rbind(combined_gene_rows, gene_rows)
+  cat(dim(gene_rows)[1], "variants found for gene:", gene, "\n")
 }
 
-gene_rows <- merged_data[Gene == GENE]
-
-if (dim(gene_rows)[1] > 0) {
-  cat(dim(gene_rows)[1], "rare variants found in", gene, "\n")
-} else if (dim(gene_rows)[1] == 0) {
-  stop(paste("No rare variants found for gene:", GENE))
+if (length(skipped_genes) > 0) {
+  cat("The following genes were skipped because they were not found in the score file:\n")
+  cat(paste(skipped_genes, collapse = ", "), "\n")
+} else {
+  cat("All gene variants were found.\n")
+}
+if (nrow(combined_gene_rows) == 0) {
+  stop("No rare variants found for the provided gene(s).")
 }
 
-# Save
-outfile_gene <- paste0(DIR_OUT, "/output_",GENE,".txt")
-fwrite(gene_rows, file = outfile_gene, sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
-cat("Done!\n\n")
-cat("Results saved to:", outfile_gene, "\n")
+
+# Save 
+if (length(gene_list) == 1) {
+  outfile_gene <- paste0(DIR_OUT, "/output_", gene_list[1], ".txt")
+} else {
+  outfile_gene <- paste0(DIR_OUT, "/output_geneset.txt")
+}
+outfile_gene <- paste0(DIR_OUT, "/output_geneset.txt")
+fwrite(combined_gene_rows, file = outfile_gene, sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
+

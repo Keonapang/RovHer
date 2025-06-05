@@ -44,7 +44,7 @@ Predicting **rare variants** (RVs; MAF < 1%) that influence complex disease risk
 RovHer can generate predictions on major operating systems, including GNU/Linux, macOS, and Windows. For biobank-scale analyses, we recommend Unix-based hardware with a minimum of 100GB RAM.
 
 ### Software dependencies
-R packages data.table, tidyverse, and dplyr.
+R packages data.table and tidyverse (latest versions).
   ```R
   install.packages("data.table")
   install.packages("tidyverse")
@@ -69,10 +69,10 @@ One text file (`variants.txt`) consisting of a column of PLINK IDs (no headers) 
 
 3. Run script to obtain RovHer scores in two ways:
 
-| Option | Description | Script name |
-|--:|-----------|-----------|
-|  A| Retrieve scores for a given list of rare variants | `get_scores.r` |
-|  B| For a given protein-coding gene, retrieve all rare variants with RovHer scores | `get_scores_per_gene.r` |
+| Option | Description | Output | Script name |
+|--:|-----------|-----------|-----------|
+|  A| Retrieve scores for a list of RVs in `variants.txt` | A `output_variants.txt` with tab-delimited columns: PLINK_SNP_NAME, Gene, RovHer_score | `get_scores.r` |
+|  B| For a given protein-coding `gene`, retrieve a list of scored RVs | A `output_gene.txt` or `output_geneset.txt` with tab-delimited columns: PLINK_SNP_NAME, Gene, RovHer_score | `get_scores.r` | `get_scores_per_gene.r` |
 
 For **option A**, run:
    ```sh
@@ -80,16 +80,16 @@ For **option A**, run:
     DIR_OUT="$mydir/RovHer/Demo" # modify
 
     cd $mydir/RovHer
-    Rscript /Scripts/get_scores.r $INFILE $DIR_OUT
+    Rscript Scripts/get_scores.r $INFILE $DIR_OUT
   ```
 
 For **option B**, run:
   ```sh
-    GENE="LDLR" # modify 
     DIR_OUT="$mydir/RovHer/Demo" # modify
+    GENE="LDLR BRCA1" # modify 
 
     cd $mydir/RovHer
-    Rscript /Scripts/get_scores_per_gene.r $GENE $DIR_OUT
+    Rscript Scripts/get_scores_per_gene.r $DIR_OUT $GENE 
   ``` 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

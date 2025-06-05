@@ -4,7 +4,7 @@
 
 # Get Rovher scores for a list of input rare variants. 
 # Inputs a .txt file with a list of variant PLINK IDs (formatted as "chr:pos:ref:alt")
-# Outputs a .txt file with three columns: PLINK_SNP_NAME, Gene, RovHer_score
+# Outputs a .txt file with three tab-delimited columns: PLINK_SNP_NAME, Gene, RovHer_score
 
 #########################################################
 
@@ -36,7 +36,7 @@ if (!file.exists(INFILE)) {
 
 # Check if "All_RovHer_Scores.txt.gz" is in the same directory as this script
 
-cat("Input variant list:", INFILE, "\n\n")
+cat("Input:", INFILE, "\n\n")
 cat("Output directory:", DIR_OUT, "\n\n")
 
 # Load
