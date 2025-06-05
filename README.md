@@ -1,6 +1,7 @@
 # RovHer: heritability-optimized scores for the functional prioritization of rare missense variants
 
 <!-- TABLE OF CONTENTS -->
+<a name="readme-top"></a>
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -44,7 +45,6 @@ RovHer can generate predictions on major operating systems, including GNU/Linux,
 
 ### Software dependencies
 R packages data.table, tidyverse, and dplyr.
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- Usage: Retrieve pre-computed scores -->
 # Usage: Retrieve pre-computed scores 
