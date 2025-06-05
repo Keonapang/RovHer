@@ -18,6 +18,7 @@
     <li><a href="#resources">Resources</a></li>
     <li><a href="#acknowledgements">Acknowledgments</a></li>
     <li><a href="#license">License</a></li>
+    <li><a href="#citing-rovher">Citing RovHer</a></li>
     <li><a href="#references">References</a></li>
   </ol>
 </details>
@@ -25,20 +26,21 @@
 <!-- ABOUT -->
 ## About
 
-Predicting **rare variants** (RVs; MAF < 1%) that influence complex disease risk is a significant challenge. We introduce RovHer (RV heritability-optimized scores), an unbiased, scalable method that scores missense RVs based on their probability of functional effect. RovHer employs the [Multivariate Adaptive Regression Splines](https://CRAN.R-project.org/package=earth) [1] model to integrate feature annotations with [Genebass](https://app.genebass.org/) [2] exome-wide association study (ExWAS) summary statistics of height. Specifically, it is trained on the per-variant **false discovery rate**, a surrogate measure for the likelihood of variant functionality.
+Predicting **rare variants** (RVs; MAF < 1%) that influence complex disease risk is a significant challenge. We introduce **RovHer** (RV heritability-optimized scores), an unbiased, scalable method that scores missense RVs based on their probability of functional effect. RovHer employs the [Multivariate Adaptive Regression Splines](https://CRAN.R-project.org/package=earth) [1] model to integrate feature annotations with [Genebass](https://app.genebass.org/) [2] exome-wide association study (ExWAS) summary statistics of height, which serves as the training trait. The dependent variable for training is the per-variant **false discovery rate**, a surrogate measure for the likelihood of variant functionality.
 
 **Performance**:
-RovHer scores are trait-agnostic. The model prioritizes RVs based on maximizing the proportion genome-wide phenotypic variance explained, which are variants that more likely functional and disease-relevant [3].
+* prioritizes RVs that explain the largest proportion of genome-wide phenotypic variance, which are variants that more likely functional and disease-relevant [3]
 
 **Usage**:
-While RovHer scores were generated on all autosomal rare variants, our analyses show that the scores are optimized for rare missense variants. Compared to loss-of-function, missense variants were significnatly enriched in rare variant heritability across 21 quantitative traits tested in the Uk Biobank.
+* scores are trait-agnostic (i.e. not tied to a specific disease or phenotype)
+* while RovHer scores were generated for *all* RVs, they are optimized for missense RVs, which were shown to be significantly enriched in RV heritability across 21 quantitative traits tested in the Uk Biobank.
 
 ![Workflow Overview](RovHer%20workflow.png)
-*An overview of the development and application of the RovHer algorithm.*
+*An overview of the development and application of RovHer.*
 
 # Getting started
 ### Hardware
-RovHer can generate variant-level predictions on major operating systems, including GNU/Linux, macOS, and Windows. For biobank-scale analyses, we recommend Unix-based hardware with a minimum of 100GB RAM.
+RovHer can generate predictions on major operating systems, including GNU/Linux, macOS, and Windows. For biobank-scale analyses, we recommend Unix-based hardware with a minimum of 100GB RAM.
 
 ### Software dependencies
 R packages data.table, tidyverse, and dplyr.
@@ -95,7 +97,6 @@ RovHer scores for all UK Biobank 4,927,152 rare variants used in this manuscript
 
 We also provide another set of 79,971,228 scores that was not trained on prediction features that have commercial licensing requirements.
 
-
 <!-- Acknowledgements -->
 ## Acknowledgements
 
@@ -109,6 +110,11 @@ We gratefully acknowledge and thank the authors of various in silico tools that 
 [2] Karczewski, K. J., Solomonson, M., Chao, K. R., Goodrich, J. K., Tiao, G., Lu, W., Riley-Gillis, B. M., Tsai, E. A., Kim, H. I., Zheng, X., Rahimov, F., Esmaeeli, S., Grundstad, A. J., Reppell, M., Waring, J., Jacob, H., Sexton, D., Bronson, P. G., Chen, X., … Neale, B. M. (2022). Systematic single-variant and gene-based association testing of thousands of phenotypes in 394,841 UK Biobank exomes. Cell Genomics, 2(9), 100168. https://doi.org/10.1016/j.xgen.2022.100168
 
 [3] Pathan, N., Deng, W. Q., Khan, M., Scipio, M. D., Mao, S., Morton, R. W., Lali, R., Pigeyre, M., Chong, M. R., & Paré, G. (2022). A method to estimate the contribution of rare coding variants to complex trait heritability. Nature Communications, 15(1), 1245. https://doi.org/10.1038/s41467-024-45407-8
+
+<!-- Citing -->
+## Citing RovHer
+
+If you use RovHer in your research, please cite our paper (citation details will be added upon publication). 
 
 <!-- LICENSE -->
 ## License
