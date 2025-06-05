@@ -5,9 +5,10 @@
 # scores for a list of input variants.
 ###################################################################
 
-GENE="./RovHer/Demo/input_variants.txt"
-DIR_OUT="./RovHer/Demo"
+mydir="/my/working/dir" # modify 
+GENE="gene" # modify 
+DIR_OUT="$mydir/RovHer/Demo"
 
-cd ./RovHer
+cd $mydir/RovHer
 Rscript ./Scripts/get_scores_per_gene.r $GENE $DIR_OUT
 

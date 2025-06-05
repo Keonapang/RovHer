@@ -1,13 +1,13 @@
 #!/usr/bin/env Rscript
 # Last updated: June 2025
+# https://github.com/Keonapang/RovHer
 
 # Get Rovher scores for a list of input rare variants. 
+# Inputs a .txt file with a list of variant PLINK IDs (formatted as "chr:pos:ref:alt")
+# Outputs a .txt file with three columns: PLINK_SNP_NAME, Gene, RovHer_score
+
 #########################################################
 
-# check if library is present
-if (!requireNamespace("dplyr", quietly = TRUE)) {
-  install.packages("dplyr")
-}
 if (!requireNamespace("data.table", quietly = TRUE)) {
   install.packages("data.table")
 }
@@ -15,9 +15,9 @@ if (!requireNamespace("tidyverse", quietly = TRUE)) {
   install.packages("tidyverse")
 }
 
-suppressMessages(library(data.table))
-suppressMessages(library(dplyr))
 suppressMessages(library(tidyverse))
+suppressMessages(library(data.table))
+setDTthreads(threads = 15)
 
 args <- commandArgs(trailingOnly = TRUE)
 INFILE <- args[1]
@@ -30,27 +30,29 @@ if (length(args) < 2) {
 if (!dir.exists(DIR_OUT)) {
   stop(paste("Directory does not exist:", DIR_OUT))
 }
-if (!dir.exists(INFILE)) {
+if (!file.exists(INFILE)) {
   stop(paste("Input file does not exist:", INFILE))
 } 
-if (file.info(INFILE)$size == 0) {
-  stop(paste("Input file is empty:", INFILE))
-}
 
 # Check if "All_RovHer_Scores.txt.gz" is in the same directory as this script
-script_dir <- dirname(rstudioapi::getActiveDocumentContext()$path)
-infile <- file.path(script_dir, "All_RovHer_Scores.txt.gz")
 
-setwd(DIR_OUT)
 cat("Input variant list:", INFILE, "\n\n")
 cat("Output directory:", DIR_OUT, "\n\n")
 
 # Load
 cat("Loading input variant list...\n")
-data <- fread(INFILE)
+data <- fread(INFILE,col.names = FALSE)
+cat(dim(data)[1], "variants found\n\n")
+if (dim(data)[1] == 0) {
+  stop(paste("Input file is empty:", INFILE))
+}
+# add column header "PLINK_SNP_NAME"
+colnames(data) <- "PLINK_SNP_NAME"
 
+# Load master score file
 cat("Loading master score file...\n")
-score_file <- fread("All_RovHer_Scores.txt.gz")
+SCORE_FILE <- "All_RovHer_Scores.txt.gz"
+scores <- fread(SCORE_FILE)
 
 # Check if data is formatted correctly
 if (ncol(data) != 1) {
@@ -63,10 +65,19 @@ if (!all(is_valid_variant)) {
 
 # Merge
 cat("Retrieving RovHer scores...\n")
-data <- merge(data, score_file, by = "PLINK_SNP_NAME", all.x = TRUE)
+setkey(scores, PLINK_SNP_NAME)
+setkey(data, PLINK_SNP_NAME)
+data <- merge(data, scores, by = "PLINK_SNP_NAME", all.x = TRUE)
+
+# Count number of missing values or NA in the "RovHer_Score" column
+missing_scores <- sum(is.na(data$RovHer_Score))
+if (missing_scores > 0) {
+  cat("Done!", missing_scores, "variants do not have RovHer scores.\n\n")
+} else {
+  cat("Done! All variants have RovHer scores.\n\n")
+}
 
 # Save
-outfile <- paste0("output_scores_", basename(INFILE), ".txt")
-fwrite(merged_data, file = outfile_cleaned, sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
-cat("Done!\n\n")
-cat("Results saved to:", outfile_cleaned, "\n")
+outfile <- paste0(DIR_OUT, "/output_", sub("\\.txt$", "", basename(INFILE)), ".txt")
+fwrite(data, file = outfile, sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
+cat("Results saved to:", outfile, "\n")

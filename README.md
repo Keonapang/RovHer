@@ -45,11 +45,15 @@ RovHer can generate predictions on major operating systems, including GNU/Linux,
 
 ### Software dependencies
 R packages data.table, tidyverse, and dplyr.
-
+  ```R
+  install.packages("data.table")
+  install.packages("tidyverse")
+  install.packages("dplyr")
+  ```
 <!-- Usage: Retrieve pre-computed scores -->
 # Usage: Retrieve pre-computed scores 
 
-One text file (`input_variants.txt`) consisting of a column of PLINK IDs (no headers) is required for input. Variant order does not matter.
+One text file (`variants.txt`) consisting of a column of PLINK IDs (no headers) is required for input. Variant order does not matter.
 |             |
 |-------------|
 |  1:10030:A:T| 
@@ -58,8 +62,9 @@ One text file (`input_variants.txt`) consisting of a column of PLINK IDs (no hea
 1. Clone the repo
    ```sh
    mydir="/my/working/dir" # modify 
-   git clone https://github.com/Keonapang/RovHer.git $mydir
-   cd $mydir/RovHer
+   cd $mydir
+   git clone https://github.com/Keonapang/RovHer.git
+   cd RovHer
    ```
 2. Download `All_RovHer_Scores.txt.gz` from Zenodo (*link available soon*) and place it in the same directory as this script.
 
@@ -72,7 +77,7 @@ One text file (`input_variants.txt`) consisting of a column of PLINK IDs (no hea
 
 For **option A**, run:
    ```sh
-    INFILE="./RovHer/Demo/input_variants.txt" # modify
+    INFILE="$mydir/RovHer/Demo/variants.txt" # modify
     DIR_OUT="$mydir/RovHer/Demo" # modify
 
     cd $mydir/RovHer

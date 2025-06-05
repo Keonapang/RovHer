@@ -5,9 +5,9 @@
 # scores for a list of input variants.
 ###################################################################
 
-INFILE="/Demo/input_variants.txt"
-DIR_OUT="/RovHer/Demo"
+mydir="/my/working/dir" # modify 
+INFILE="$mydir/RovHer/Demo/input_variants.txt" # modify
+DIR_OUT="$mydir/RovHer/Demo" # modify
 
-cd ./RovHer
-Rscript ./Scripts/get_scores.r $INFILE $DIR_OUT
-
+cd $mydir/RovHer
+Rscript /Scripts/get_scores.r $INFILE $DIR_OUT
