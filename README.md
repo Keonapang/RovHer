@@ -27,7 +27,7 @@
 <!-- ABOUT -->
 ## About
 
-Predicting **rare variants** (RVs; MAF < 1%) that influence complex disease risk is a significant challenge. We introduce **RovHer** (RV heritability-optimized scores), an unbiased, scalable method that scores missense RVs based on their probability of functional effect. RovHer employs the [Multivariate Adaptive Regression Splines](https://CRAN.R-project.org/package=earth) [1] model to integrate feature annotations with [Genebass](https://app.genebass.org/) [2] exome-wide association study (ExWAS) summary statistics of height, which serves as the training trait. The dependent variable for training is the per-variant **false discovery rate**, a surrogate measure for the likelihood of variant functionality.
+Predicting **rare variants** (RVs; MAF < 1%) that influence complex disease risk is a significant challenge. We introduce **RovHer** (RV heritability-optimized scores), an unbiased, scalable method that scores missense RVs based on their probability of functional effect. RovHer employs the [Multivariate Adaptive Regression Splines](https://CRAN.R-project.org/package=earth) [1] model to integrate feature annotations with [Genebass](https://app.genebass.org/) [2] (N=394,841) exome-wide association study (ExWAS) summary statistics of height, which serves as the training trait. The dependent variable for training is the per-variant **false discovery rate**, a surrogate measure for the likelihood of variant functionality.
 
 **Performance**:
 * prioritizes RVs that explain the largest proportion of genome-wide phenotypic variance, which are variants that more likely functional and disease-relevant [3]
@@ -65,9 +65,9 @@ One text file (`input_variants.txt`) consisting of a column of PLINK IDs (no hea
 3. Run script to obtain RovHer scores in two ways:
 
 | Option | Description | Script name |
-|-----:|-----------|-----------|
-|     A| Retrieve scores for a given list of rare variants | `get_scores.r` |
-|     B| Retrieve scores for all rare variants in a given gene | `get_scores_per_gene.r` |
+|--:|-----------|-----------|
+|  A| Retrieve scores for a given list of rare variants | `get_scores.r` |
+|  B| For a given protein-coding gene, retrieve all rare variants with RovHer scores | `get_scores_per_gene.r` |
 
 For **option A**, run:
    ```sh
@@ -75,16 +75,16 @@ For **option A**, run:
     DIR_OUT="./RovHer/Demo" # modify
 
     cd ./RovHer # Navigate into the directory of this cloned git repo 
-    Rscript ./scripts/get_RovHer_scores.r $INFILE $DIR_OUT
+    Rscript ./Scripts/get_scores.r $INFILE $DIR_OUT
   ```
 
 For **option B**, run:
   ```sh
-    gene="LDLR" # modify 
+    GENE="LDLR" # modify 
     DIR_OUT="./RovHer/Demo" # modify
 
     cd ./RovHer # Navigate into the directory of this cloned git repo 
-    Rscript ./scripts/get_RovHer_scores.r $gene $DIR_OUT
+    Rscript ./Scripts/get_scores_per_gene.r $GENE $DIR_OUT
   ``` 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -101,7 +101,6 @@ We also provide another set of 79,971,228 scores that was not trained on predict
 ## Acknowledgements
 
 We gratefully acknowledge and thank the authors of various in silico tools that we utilized in our study for making their pre-computed scores and training data readily available.
-
 
 ## References
 

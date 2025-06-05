@@ -1,10 +1,8 @@
 #!/usr/bin/env Rscript
-# June 2025
-# Get Rovher scores for a list of input rare variants. 
-# we recommend using missense rare variants only.
+# Last updated: June 2025
 
-# Download All_RovHer_Scores.txt.gz from Zenodo, and place it in the same directory as this script.
-################################################
+# Get Rovher scores for a list of input rare variants. 
+#########################################################
 
 # check if library is present
 if (!requireNamespace("dplyr", quietly = TRUE)) {
@@ -26,7 +24,7 @@ INFILE <- args[1]
 DIR_OUT <- args[2]
 
 if (length(args) < 3) {
-  stop("Usage: Rscript get_RovHer_scores.r <INFILE> <DIR_OUT>")
+  stop("Usage: Rscript ./Scripts/get_RovHer_scores.r <INFILE> <DIR_OUT>")
 }
 
 if (!dir.exists(DIR_OUT)) {
@@ -44,7 +42,7 @@ script_dir <- dirname(rstudioapi::getActiveDocumentContext()$path)
 infile <- file.path(script_dir, "All_RovHer_Scores.txt.gz")
 
 setwd(DIR_OUT)
-cat("Input variant list:", INFILE, "\n")
+cat("Input variant list:", INFILE, "\n\n")
 cat("Output directory:", DIR_OUT, "\n\n")
 
 # Load
@@ -65,5 +63,6 @@ if (!all(is_valid_variant)) {
 data <- merge(data, score_file, by = "PLINK_SNP_NAME", all.x = TRUE)
 
 # Save
+outfile <- paste0("output_scores_", basename(INFILE), ".txt")
 fwrite(merged_data, file = outfile_cleaned, sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
 cat("Saved to:", outfile_cleaned, "\n")

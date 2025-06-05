@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
-# June 2025
-# Get all RovHer scores for a given gene
+# For a given protein-coding gene, retrieve all rare variants with RovHer scores
+# Last updated: June 2025
 ################################################
 
 if (!requireNamespace("dplyr", quietly = TRUE)) {
@@ -18,11 +18,11 @@ suppressMessages(library(dplyr))
 suppressMessages(library(tidyverse))
 
 args <- commandArgs(trailingOnly = TRUE)
-gene <- args[1]
+GENE <- args[1]
 DIR_OUT <- args[2]
 
 if (length(args) < 2) {
-  stop("Usage: Rscript get_RovHer_scores.r <gene> <DIR_OUT>")
+  stop("Usage: Rscript get_RovHer_scores.r <GENE> <DIR_OUT>")
 }
 
 if (!dir.exists(DIR_OUT)) {
@@ -34,22 +34,22 @@ script_dir <- dirname(rstudioapi::getActiveDocumentContext()$path)
 infile <- file.path(script_dir, "All_RovHer_Scores.txt.gz")
 
 setwd(DIR_OUT)
-cat("Selected gene:", gene, "\n")
+cat("Selected GENE:", GENE, "\n")
 cat("Output directory:", DIR_OUT, "\n\n")
 
 # Load
 score_file <- fread("All_RovHer_Scores.txt.gz")
 
-# Ensure that the input gene is valid
+# Ensure that the input GENE is valid
 if (!gene %in% unique(score_file$Gene)) {
   stop(paste(gene, "not found in the score file."))
 }
 
-gene_rows <- merged_data[Gene == gene]
+gene_rows <- merged_data[Gene == GENE]
 print(dim(gene_rows))
 cat(dim(gene_rows)[1], " rare variants found in", gene, ".\n")
 
 # Save
-outfile_gene <- paste0("output_scores_", gene, ".txt")
+outfile_gene <- paste0("output_scores_", GENE, ".txt")
 fwrite(gene_rows, file = outfile_gene, sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
 cat("Results saved to:", outfile_gene, "\n")
