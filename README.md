@@ -52,7 +52,7 @@ R packages data.table and tidyverse (latest versions).
 <!-- Usage: Retrieve pre-computed scores -->
 # Usage: Retrieve pre-computed scores 
 
-One text file (`variants.txt`) consisting of a column of PLINK IDs (no headers) is required for input. Variant order does not matter.
+One text file `variants.txt` consisting of a column of PLINK IDs (no headers) is required for input. Variant order does not matter.
 |             |
 |-------------|
 |  1:10030:A:T| 
@@ -62,6 +62,7 @@ One text file (`variants.txt`) consisting of a column of PLINK IDs (no headers) 
    ```sh
    mydir="/my/working/dir" # modify 
    cd $mydir
+
    git clone https://github.com/Keonapang/RovHer.git
    cd RovHer
    ```
@@ -72,21 +73,23 @@ One text file (`variants.txt`) consisting of a column of PLINK IDs (no headers) 
 | Option | Description | Output | Script name |
 |--:|-----------|-----------|-----------|
 |  A| Retrieve scores for a list of RVs in `variants.txt` | A `output_variants.txt` with tab-delimited columns: PLINK_SNP_NAME, Gene, RovHer_score | `get_scores.r` |
-|  B| For a given protein-coding `gene`, retrieve a list of scored RVs | A `output_gene.txt` or `output_geneset.txt` with tab-delimited columns: PLINK_SNP_NAME, Gene, RovHer_score | `get_scores.r` | `get_scores_per_gene.r` |
+|  B| For a given protein-coding `gene` or set of genes, retrieve a list of scored RVs | A `output_gene.txt` or `output_geneset.txt` with tab-delimited columns: PLINK_SNP_NAME, Gene, RovHer_score | `get_scores.r` | `get_scores_per_gene.r` |
 
 For **option A**, run:
    ```sh
-    INFILE="$mydir/RovHer/Demo/variants.txt" # modify
-    DIR_OUT="$mydir/RovHer/Demo" # modify
+    INFILE="$mydir/RovHer/Demo/variants.txt" # input list 
+    DIR_OUT="$mydir/RovHer/Demo" # output directory 
 
     cd $mydir/RovHer
     Rscript Scripts/get_scores.r $INFILE $DIR_OUT
   ```
 
-For **option B**, run:
+For **option B**, specify gene(s) in all capital letters:
   ```sh
-    DIR_OUT="$mydir/RovHer/Demo" # modify
-    GENE="LDLR BRCA1" # modify 
+    DIR_OUT="$mydir/RovHer/Demo" # output directory 
+    GENE="LDLR BRCA1 APOB" # example of a gene set  
+    # or
+    GENE="LDLR" # example of one gene 
 
     cd $mydir/RovHer
     Rscript Scripts/get_scores_per_gene.r "$DIR_OUT" "$GENE"
