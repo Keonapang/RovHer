@@ -34,7 +34,7 @@ Predicting **rare variants** (RVs; MAF < 1%) that influence complex disease risk
 
 **Usage**:
 * scores are trait-agnostic (i.e. not tied to a specific disease or phenotype)
-* RovHer scores were generated for all RVs; however, they are optimized for missense variants, which demonstrated significant enrichment in RV heritability across 21 traits tested in the UK Biobank.
+* RovHer scores were generated for all RVs; however, they are optimized for missense variants, which demonstrates significant enrichment in RV heritability across 21 traits tested in the UK Biobank.
 
 ![Workflow Overview](RovHer%20workflow.png)
 *An overview of the development and application of RovHer.*
@@ -52,7 +52,7 @@ R packages data.table and tidyverse (latest versions).
 <!-- Usage: Retrieve pre-computed scores -->
 # Usage: Retrieve pre-computed scores 
 
-1. Clone the repo
+1. Clone the repo into your working directory
    ```sh
    mydir="/my/working/dir" # modify 
    cd $mydir
@@ -69,7 +69,12 @@ R packages data.table and tidyverse (latest versions).
 |  A| Retrieve scores for a list of RVs in `variants.txt` | A `output_variants.txt` with tab-delimited columns: PLINK_SNP_NAME, Gene, RovHer_score | `get_scores.r` |
 |  B| For a given protein-coding `gene` or set of genes, retrieve a list of scored RVs | A `output_gene.txt` or `output_geneset.txt` with tab-delimited columns: PLINK_SNP_NAME, Gene, RovHer_score | `get_scores.r` | `get_scores_per_gene.r` |
 
-For **option A**, run:
+For **option A**, the required input is a single text file `variants.txt` consisting of a column of PLINK IDs (no headers). Variants do not have to be sorted. For example:
+|             |
+|-------------|
+|  1:10030:A:T| 
+|  8:203440:G:C| 
+
    ```sh
     INFILE="$mydir/RovHer/Demo/variants.txt" # input list 
     DIR_OUT="$mydir/RovHer/Demo" # output directory 
@@ -88,13 +93,6 @@ For **option B**, specify gene(s) in all capital letters:
     cd $mydir/RovHer
     Rscript Scripts/get_scores_per_gene.r "$DIR_OUT" "$GENE"
   ``` 
-
-For option A, the required input is a single text file `variants.txt` consisting of a column of PLINK IDs (no headers). Variants do not have to be sorted.
-|             |
-|-------------|
-|  1:10030:A:T| 
-|  8:203440:G:C| 
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
