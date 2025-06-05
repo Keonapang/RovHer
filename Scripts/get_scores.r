@@ -14,7 +14,7 @@ if (!requireNamespace("data.table", quietly = TRUE)) {
 if (!requireNamespace("tidyverse", quietly = TRUE)) {
   install.packages("tidyverse")
 }
-
+cat("\n")
 suppressMessages(library(tidyverse))
 suppressMessages(library(data.table))
 setDTthreads(threads = 15)
@@ -41,17 +41,26 @@ cat("Output directory:", DIR_OUT, "\n\n")
 
 # Load
 cat("Loading input variant list...\n")
-data <- fread(INFILE,col.names = FALSE)
-cat(dim(data)[1], "variants found\n\n")
-if (dim(data)[1] == 0) {
+data <- tryCatch({
+  fread(paste0(INFILE))
+}, error = function(e) {
+  stop(paste("Error reading input file:", e$message))
+})
+
+if (nrow(data) == 0) {
   stop(paste("Input file is empty:", INFILE))
 }
+cat(nrow(data), "variants found\n\n")
+
 # add column header "PLINK_SNP_NAME"
 colnames(data) <- "PLINK_SNP_NAME"
 
 # Load master score file
 cat("Loading master score file...\n")
 SCORE_FILE <- "All_RovHer_Scores.txt.gz"
+if (!file.exists(SCORE_FILE)) {
+  stop(paste("RovHer scoring file (", SCORE_FILE, ") does not exist. Instructions: download from Zenodo and place it in the /RovHer directory."))
+}
 scores <- fread(SCORE_FILE)
 
 # Check if data is formatted correctly

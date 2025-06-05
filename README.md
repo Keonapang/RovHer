@@ -48,7 +48,6 @@ R packages data.table, tidyverse, and dplyr.
   ```R
   install.packages("data.table")
   install.packages("tidyverse")
-  install.packages("dplyr")
   ```
 <!-- Usage: Retrieve pre-computed scores -->
 # Usage: Retrieve pre-computed scores 
