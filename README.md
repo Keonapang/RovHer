@@ -13,110 +13,100 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
+      <a href="#about">About</a>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#Hardware">Hardware</a></li>
+        <li><a href="#Software">Software</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#Usage">Usage: Retrieve pre-computed scores</a></li>
+    <li><a href="#Resource">Resource</a></li>
+    <li><a href="#Acknowledgments">Acknowledgments</a></li>
+    <li><a href="#License">License</a></li>
+    <li><a href="#Contact">Contact</a></li>
   </ol>
 </details>
 
 <!-- ABOUT -->
 ## About
 
-Predicting rare variants (RVs; MAF < 1%) that influence complex disease risk is a significant challenge. We introduce RovHer (RV heritability-optimized scores), an unbiased, scalable method that scores missense RVs based on their probability of functional effect. The RovHer method employs the [Multivariate Adaptive Regression Splines](https://CRAN.R-project.org/package=earth) [1] model to integrate feature annotations with [Genebass](https://app.genebass.org/) [2] exome-wide association study (ExWAS) summary statistics of height. Specifically, it is trained on the per-variant false discovery rate, a surrogate measure for the likelihood of variant functionality.
+Predicting **rare variants** (RVs; MAF < 1%) that influence complex disease risk is a significant challenge. We introduce RovHer (RV heritability-optimized scores), an unbiased, scalable method that scores missense RVs based on their probability of functional effect. RovHer employs the [Multivariate Adaptive Regression Splines](https://CRAN.R-project.org/package=earth) [1] model to integrate feature annotations with [Genebass](https://app.genebass.org/) [2] exome-wide association study (ExWAS) summary statistics of height. Specifically, it is trained on the per-variant **false discovery rate**, a surrogate measure for the likelihood of variant functionality.
 
-*Performance*:
-The model prioritizes RVs based on maximizing the proportion genome-wide phenotypic variance explained, which are variants that more likely functional and disease-relevant [3]. RovHer scores are trait-agnostic, and the model does not rely on assumptions about genetic architecture or effect size. 
+**Performance**:
+RovHer scores are trait-agnostic. The model prioritizes RVs based on maximizing the proportion genome-wide phenotypic variance explained, which are variants that more likely functional and disease-relevant [3].
 
-*Note on usage*:
-RovHer scores were generated on all 79,971,228 possible autosomal rare variants in humans. In our study, the scores were optimized for rare missense variants. LoF variants do not contribute a large proportion of total rare variant heritability of a given trait. 
+**Usage**:
+While RovHer scores were generated on all autosomal rare variants, our analyses show that the scores are optimized for rare missense variants. Compared to loss-of-function, missense variants were significnatly enriched in rare variant heritability across 21 quantitative traits tested in the Uk Biobank.
 
 ![Workflow Overview](RovHer%20workflow.png)
 *An overview of the development and application of the RovHer algorithm.*
 
-## Requirements
-# Hardware
-RovHer can generate variant-level predictions on major operating systems, including GNU/Linux, macOS, and Windows. For biobank-scale analyses, we recommend Unix-based hardware with a minimum of 200GB RAM. 
+# Getting started
+### Hardware
+RovHer can generate variant-level predictions on major operating systems, including GNU/Linux, macOS, and Windows. For biobank-scale analyses, we recommend Unix-based hardware with a minimum of 100GB RAM.
 
-# Software dependencies
-R packages data.table, tidyverse, and dplyr
+### Software dependencies
+R packages data.table, tidyverse, and dplyr.
 
-<!-- GETTING STARTED -->
-## Getting started: Retrieve pre-computed scores 
+<!-- Usage: Retrieve pre-computed scores -->
+# Usage: Retrieve pre-computed scores 
 
-This repo allows users to obtain RovHer scores under two options:
-
-| Option | Description | Script name |
-|-----:|-----------|-----------|
-|     1| Retrieve scores for a given list of rare variants | get_scores.r |
-|     2| Retrieve scores for all rare variants in a given gene | get_scores_per_gene.r |
-
-Variant order in `input_variants.txt` does not matter. A text file consisting of a column of PLINK IDs is required for input. No header needed.
-| Variants |
-|-----:|
+One text file (`input_variants.txt`) consisting of a column of PLINK IDs (no headers) is required for input. Variant order does not matter.
+|             |
+|-------------|
 |  1:10030:A:T| 
 |  8:203440:G:C| 
-|  ....| 
 
 1. Clone the repo
    ```sh
    git clone https://github.com/Keonapang/RovHer.git
    cd ./RovHer
    ```
-2. Download `All_RovHer_Scores.txt.gz` from Zenodo and place it in the same directory as this script. 
+2. Download `All_RovHer_Scores.txt.gz` from Zenodo and place it in the same directory as this script.
 
-3. Run script. 
+3. Run script to obtain RovHer scores in two ways:
+
+| Option | Description | Script name |
+|-----:|-----------|-----------|
+|     A| Retrieve scores for a given list of rare variants | `get_scores.r` |
+|     B| Retrieve scores for all rare variants in a given gene | `get_scores_per_gene.r` |
+
+For **option A**, run:
    ```sh
-    INFILE="./RovHer/Demo/input_variants.txt"
-    DIR_OUT="./RovHer/Demo"
+    INFILE="./RovHer/Demo/input_variants.txt" # modify
+    DIR_OUT="./RovHer/Demo" # modify
 
-    cd ./RovHer
+    cd ./RovHer # Navigate into the directory of this cloned git repo 
     Rscript ./scripts/get_RovHer_scores.r $INFILE $DIR_OUT
-    ``` 
+  ```
 
-4. Retrieve all RovHer scores for a given gene. Navigate to script directory.
-   ```sh
-    gene="LDLR"
-    DIR_OUT="./RovHer/Demo"
+For **option B**, run:
+  ```sh
+    gene="LDLR" # modify 
+    DIR_OUT="./RovHer/Demo" # modify
 
-    cd ./RovHer
+    cd ./RovHer # Navigate into the directory of this cloned git repo 
     Rscript ./scripts/get_RovHer_scores.r $gene $DIR_OUT
-    ``` 
+  ``` 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- Resources -->
 
-## Resources
+# Resources
 
-RovHer scores for all UK Biobank 4,927,152 rare variants used in this manuscript, along with pre-computed scores for all 79,971,228 possible autosomal rare variants in the human exome, will be made available upon publication and can be downloaded from Zenodo. 
+RovHer scores for all UK Biobank 4,927,152 rare variants used in this manuscript, along with pre-computed scores for all 79,971,228 possible autosomal rare variants in humans, will be made available to download on Zenodo upon publication.
 
-RovHer scores:
-* Score file generated using a MARS model
-* Score file generated using a MARS model trained on prediction features that do not have commercial licensing requirements
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+We also provide another set of 79,971,228 scores that was not trained on prediction features that have commercial licensing requirements.
 
 
-<!-- ROADMAP -->
+<!-- Acknowledgements -->
 ## Acknowledgements
 
-We gratefully acknowledge and thank the authors of the various in silico tools that we utilized in our study for making their pre-computed scores and training data readily available.
-* [![Next][Next.js]][Next-url]
+We gratefully acknowledge and thank the authors of various in silico tools that we utilized in our study for making their pre-computed scores and training data readily available.
 
 
 ## References
