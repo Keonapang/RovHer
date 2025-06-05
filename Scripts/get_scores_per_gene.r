@@ -18,7 +18,7 @@ suppressMessages(library(tidyverse))
 setDTthreads(threads = 15)
 
 args <- commandArgs(trailingOnly = TRUE)
-DIR_OUT <- args[1] # DIR="/mnt/nfs/rigenenfs/shared_resources/biobanks/UKBIOBANK/pangk/RovHer/Demo"
+DIR_OUT <- args[1] # DIR_OUT="/mnt/nfs/rigenenfs/shared_resources/biobanks/UKBIOBANK/pangk/RovHer/Demo"
 GENE <- args[2] # GENE="LDLR APOB BRCA1"
 
 if (length(args) < 2) {
@@ -32,8 +32,7 @@ if (!dir.exists(DIR_OUT)) {
 
 # Parse single or multiple genes
 gene_list <- unlist(strsplit(GENE, " "))  
-
-cat("Selected gene(s):", paste(gene_list, collapse = ", "), "\n")
+cat("Selected gene(s):", gene_list, "\n")
 cat("Output directory:", DIR_OUT, "\n\n")
 
 # Load master score file
@@ -55,7 +54,7 @@ for (gene in gene_list) {
 
   gene_rows <- score_file[Gene == gene]
   combined_gene_rows <- rbind(combined_gene_rows, gene_rows)
-  cat(dim(gene_rows)[1], "variants found for gene:", gene, "\n")
+  cat(dim(gene_rows)[1], "variants found for", gene, "\n")
 }
 
 if (length(skipped_genes) > 0) {
@@ -67,7 +66,6 @@ if (length(skipped_genes) > 0) {
 if (nrow(combined_gene_rows) == 0) {
   stop("No rare variants found for the provided gene(s).")
 }
-
 
 # Save 
 if (length(gene_list) == 1) {

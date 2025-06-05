@@ -15,5 +15,5 @@ GENE="gene" # modify
 GENE="LDLR APOB BRCA1"
 
 cd $mydir/RovHer
-Rscript Scripts/get_scores_per_gene.r $DIR_OUT $GENE 
+Rscript Scripts/get_scores_per_gene.r "$DIR_OUT" "$GENE"
 

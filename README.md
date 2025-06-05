@@ -89,7 +89,7 @@ For **option B**, run:
     GENE="LDLR BRCA1" # modify 
 
     cd $mydir/RovHer
-    Rscript Scripts/get_scores_per_gene.r $DIR_OUT $GENE 
+    Rscript Scripts/get_scores_per_gene.r "$DIR_OUT" "$GENE"
   ``` 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
