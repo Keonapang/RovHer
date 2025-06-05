@@ -52,12 +52,6 @@ R packages data.table and tidyverse (latest versions).
 <!-- Usage: Retrieve pre-computed scores -->
 # Usage: Retrieve pre-computed scores 
 
-One text file `variants.txt` consisting of a column of PLINK IDs (no headers) is required for input. Variant order does not matter.
-|             |
-|-------------|
-|  1:10030:A:T| 
-|  8:203440:G:C| 
-
 1. Clone the repo
    ```sh
    mydir="/my/working/dir" # modify 
@@ -94,6 +88,13 @@ For **option B**, specify gene(s) in all capital letters:
     cd $mydir/RovHer
     Rscript Scripts/get_scores_per_gene.r "$DIR_OUT" "$GENE"
   ``` 
+
+For option A, the required input is a single text file `variants.txt` consisting of a column of PLINK IDs (no headers). Variants do not have to be sorted.
+|             |
+|-------------|
+|  1:10030:A:T| 
+|  8:203440:G:C| 
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
