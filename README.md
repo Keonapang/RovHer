@@ -1,13 +1,5 @@
 # RovHer: heritability-optimized scores for the functional prioritization of rare missense variants
 
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -18,15 +10,15 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#Hardware">Hardware</a></li>
-        <li><a href="#Software">Software</a></li>
+        <li><a href="#hardware">Hardware</a></li>
+        <li><a href="#software-dependencies">Software Dependencies</a></li>
       </ul>
     </li>
-    <li><a href="#Usage">Usage: Retrieve pre-computed scores</a></li>
-    <li><a href="#Resource">Resource</a></li>
-    <li><a href="#Acknowledgments">Acknowledgments</a></li>
-    <li><a href="#License">License</a></li>
-    <li><a href="#Contact">Contact</a></li>
+    <li><a href="#usage-retrieve-pre-computed-scores">Usage: Retrieve Pre-computed Scores</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#acknowledgements">Acknowledgments</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#references">References</a></li>
   </ol>
 </details>
 
@@ -50,6 +42,7 @@ RovHer can generate variant-level predictions on major operating systems, includ
 
 ### Software dependencies
 R packages data.table, tidyverse, and dplyr.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- Usage: Retrieve pre-computed scores -->
 # Usage: Retrieve pre-computed scores 
@@ -123,4 +116,3 @@ We gratefully acknowledge and thank the authors of various in silico tools that 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
