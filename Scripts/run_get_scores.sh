@@ -5,8 +5,8 @@
 # scores for a list of input variants.
 ###################################################################
 
-INFILE="./RovHer/Demo/input_variants.txt"
-DIR_OUT="./RovHer/Demo"
+INFILE="/Demo/input_variants.txt"
+DIR_OUT="/RovHer/Demo"
 
 cd ./RovHer
 Rscript ./Scripts/get_scores.r $INFILE $DIR_OUT

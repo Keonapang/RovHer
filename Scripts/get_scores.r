@@ -23,8 +23,8 @@ args <- commandArgs(trailingOnly = TRUE)
 INFILE <- args[1]
 DIR_OUT <- args[2]
 
-if (length(args) < 3) {
-  stop("Usage: Rscript ./Scripts/get_RovHer_scores.r <INFILE> <DIR_OUT>")
+if (length(args) < 2) {
+  stop("Usage: Rscript ./Scripts/get_scores.r <INFILE> <DIR_OUT>")
 }
 
 if (!dir.exists(DIR_OUT)) {
@@ -46,8 +46,10 @@ cat("Input variant list:", INFILE, "\n\n")
 cat("Output directory:", DIR_OUT, "\n\n")
 
 # Load
+cat("Loading input variant list...\n")
 data <- fread(INFILE)
 
+cat("Loading master score file...\n")
 score_file <- fread("All_RovHer_Scores.txt.gz")
 
 # Check if data is formatted correctly
@@ -60,9 +62,11 @@ if (!all(is_valid_variant)) {
 }
 
 # Merge
+cat("Retrieving RovHer scores...\n")
 data <- merge(data, score_file, by = "PLINK_SNP_NAME", all.x = TRUE)
 
 # Save
 outfile <- paste0("output_scores_", basename(INFILE), ".txt")
 fwrite(merged_data, file = outfile_cleaned, sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
-cat("Saved to:", outfile_cleaned, "\n")
+cat("Done!\n\n")
+cat("Results saved to:", outfile_cleaned, "\n")

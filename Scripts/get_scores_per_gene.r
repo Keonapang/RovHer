@@ -1,6 +1,8 @@
 #!/usr/bin/env Rscript
-# For a given protein-coding gene, retrieve all rare variants with RovHer scores
 # Last updated: June 2025
+# https://github.com/Keonapang/RovHer
+
+# For a given protein-coding gene, retrieve all rare variants with RovHer scores
 ################################################
 
 if (!requireNamespace("dplyr", quietly = TRUE)) {
@@ -22,7 +24,7 @@ GENE <- args[1]
 DIR_OUT <- args[2]
 
 if (length(args) < 2) {
-  stop("Usage: Rscript get_RovHer_scores.r <GENE> <DIR_OUT>")
+  stop("Usage: Rscript ./Scripts/get_scores_per_gene.r <GENE> <DIR_OUT>")
 }
 
 if (!dir.exists(DIR_OUT)) {
@@ -38,6 +40,7 @@ cat("Selected GENE:", GENE, "\n")
 cat("Output directory:", DIR_OUT, "\n\n")
 
 # Load
+cat("Loading master score file...\n")
 score_file <- fread("All_RovHer_Scores.txt.gz")
 
 # Ensure that the input GENE is valid
@@ -52,4 +55,5 @@ cat(dim(gene_rows)[1], " rare variants found in", gene, ".\n")
 # Save
 outfile_gene <- paste0("output_scores_", GENE, ".txt")
 fwrite(gene_rows, file = outfile_gene, sep = "\t", row.names = FALSE, col.names = TRUE, quote = FALSE)
+cat("Done!\n\n")
 cat("Results saved to:", outfile_gene, "\n")

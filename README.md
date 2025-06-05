@@ -34,7 +34,7 @@ Predicting **rare variants** (RVs; MAF < 1%) that influence complex disease risk
 
 **Usage**:
 * scores are trait-agnostic (i.e. not tied to a specific disease or phenotype)
-* while RovHer scores were generated for *all* RVs, they are optimized for missense RVs, which were shown to be significantly enriched in RV heritability across 21 quantitative traits tested in the Uk Biobank.
+* RovHer scores were generated for all RVs; however, they are optimized for missense variants, which demonstrated significant enrichment in RV heritability across 21 traits tested in the UK Biobank.
 
 ![Workflow Overview](RovHer%20workflow.png)
 *An overview of the development and application of RovHer.*
@@ -57,10 +57,11 @@ One text file (`input_variants.txt`) consisting of a column of PLINK IDs (no hea
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/Keonapang/RovHer.git
-   cd ./RovHer
+   mydir="/my/working/dir" # modify 
+   git clone https://github.com/Keonapang/RovHer.git $mydir
+   cd $mydir/RovHer
    ```
-2. Download `All_RovHer_Scores.txt.gz` from Zenodo and place it in the same directory as this script.
+2. Download `All_RovHer_Scores.txt.gz` from Zenodo (*link available soon*) and place it in the same directory as this script.
 
 3. Run script to obtain RovHer scores in two ways:
 
@@ -72,19 +73,19 @@ One text file (`input_variants.txt`) consisting of a column of PLINK IDs (no hea
 For **option A**, run:
    ```sh
     INFILE="./RovHer/Demo/input_variants.txt" # modify
-    DIR_OUT="./RovHer/Demo" # modify
+    DIR_OUT="$mydir/RovHer/Demo" # modify
 
-    cd ./RovHer # Navigate into the directory of this cloned git repo 
-    Rscript ./Scripts/get_scores.r $INFILE $DIR_OUT
+    cd $mydir/RovHer
+    Rscript /Scripts/get_scores.r $INFILE $DIR_OUT
   ```
 
 For **option B**, run:
   ```sh
     GENE="LDLR" # modify 
-    DIR_OUT="./RovHer/Demo" # modify
+    DIR_OUT="$mydir/RovHer/Demo" # modify
 
-    cd ./RovHer # Navigate into the directory of this cloned git repo 
-    Rscript ./Scripts/get_scores_per_gene.r $GENE $DIR_OUT
+    cd $mydir/RovHer
+    Rscript /Scripts/get_scores_per_gene.r $GENE $DIR_OUT
   ``` 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -93,9 +94,9 @@ For **option B**, run:
 
 # Resources
 
-RovHer scores for all UK Biobank 4,927,152 rare variants used in this manuscript, along with pre-computed scores for all 79,971,228 possible autosomal rare variants in humans, will be made available to download on Zenodo upon publication.
+RovHer scores for all 4,927,152 rare variants analyzed in this study from the UK Biobank, as well as pre-computed scores for 79,971,228 possible autosomal rare variants in humans, will be made publicly available for download on Zenodo upon publication. 
 
-We also provide another set of 79,971,228 scores that was not trained on prediction features that have commercial licensing requirements.
+A separate set of 79,971,228 scores, trained without prediction features subject to commercial licensing restrictions, will also be provided.
 
 <!-- Acknowledgements -->
 ## Acknowledgements
@@ -113,7 +114,7 @@ We gratefully acknowledge and thank the authors of various in silico tools that 
 <!-- Citing -->
 ## Citing RovHer
 
-If you use RovHer in your research, please cite our paper (citation details will be added upon publication). 
+If you use RovHer in your research, please cite our paper (citation details will be added upon publication).
 
 <!-- LICENSE -->
 ## License
